@@ -2,7 +2,6 @@ package org.yearup.controllers;
 
 import org.springframework.stereotype.Component;
 import org.yearup.data.ShoppingCartDao;
-import org.yearup.data.mysql.MySqlCategoryDao;
 import org.yearup.models.Product;
 import org.yearup.models.ShoppingCart;
 import org.yearup.models.ShoppingCartItem;
@@ -38,10 +37,10 @@ public class MySqlShoppingCartDAO implements ShoppingCartDao {
     @Override
     public ShoppingCart getByUserId(int userId) { // retrieve shopping cart from a specific user. method parameter handles which user cart to grab. method is just a container for items.
         String sql = """
-                SELECT shopping_cart.product_id, shopping_cart.quantity,
-                 products.name, products.price, products.category_id, products.description,products.color,
-                 products.image_url,products.stock,products.featured FROM shopping_cart sc
-                 JOIN products p ON shopping_cart.product_id = products.product_id WHERE shopping_cart.user_id = ?""";
+                SELECT sc.product_id, sc.quantity,
+                 p.name, p.price, p.category_id, p.description,p.color,
+                 p.image_url,p.stock,p.featured FROM shopping_cart sc
+                 JOIN products p ON sc.product_id = p.product_id WHERE sc.user_id = ?""";
         try (Connection conn = source.getConnection()) {
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setInt(1, userId);
@@ -79,15 +78,41 @@ public class MySqlShoppingCartDAO implements ShoppingCartDao {
         }
     }
     @Override
-    public List<ShoppingCartItem> getAllCartItems() {
+    public List<ShoppingCartItem> getAllCartItems(int userid) {
         List<ShoppingCartItem> list = new ArrayList<>();
-        String sql = "SELECT * FROM products";
+        String sql = """
+                SELECT sc.product_id, sc.quantity, p.name, p.price, p.category_id, p.description, p.color,
+                p.image_url, p.stock, p.featured FROM shopping_cart sc JOIN products p on sc.product_id = p.product_id WHERE sc.user_id = ?""";
          try(Connection connection = source.getConnection()) {
              PreparedStatement stmt = connection.prepareStatement(sql);
              ResultSet rs = stmt.executeQuery();
 
+
              while (rs.next()) {
-                 rs.getInt()
+                 Product product = new Product(
+                 rs.getInt("product_id"),
+                 rs.getString("name"),
+                 rs.getBigDecimal("price"),
+                 rs.getInt("category_id"),
+                 rs.getString("description"),
+                 rs.getString("color"),
+                 rs.getInt("Stock"),
+                 rs.getBoolean("featured"),
+                 rs.getString("image_url"));
+
+
+
+                 int quantity = rs.getInt("quantity");
+
+
+                 ShoppingCartItem item = new ShoppingCartItem();
+                 item.setQuantity(quantity);
+                 item.setProduct(product);
+                 list.add(item);
+
+
+
+
              }
 
          } catch (SQLException e) {
@@ -104,8 +129,7 @@ public class MySqlShoppingCartDAO implements ShoppingCartDao {
     }
 
     @Override
-    public List<ShoppingCartItem> removeItemFromCart(int userId, int productId) {
-        return List.of();
+    public void removeItemFromCart(int userId, int productId) {
     }
 
     @Override

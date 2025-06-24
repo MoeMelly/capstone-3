@@ -8,9 +8,9 @@ import java.util.List;
 public interface ShoppingCartDao
 {
     ShoppingCart getByUserId(int userId);
-    List<ShoppingCartItem> getAllCartItems();
+    List<ShoppingCartItem> getAllCartItems(int userId);
     ShoppingCart addItemToCart(int userId, int productId, int quantity);
-    List<ShoppingCartItem> removeItemFromCart(int userId, int productId);
+    void removeItemFromCart(int userId, int productId);
     void updateItemQuantity(int userId, int productId, int quantity);
     void clearCart(int userId);
     double getTotalCartValue(int userId);
