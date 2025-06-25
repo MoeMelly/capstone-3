@@ -42,7 +42,7 @@ public class ProductsController
         }
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("{id}")
     @PreAuthorize("permitAll()")
     public Product getById(@PathVariable int id )
     {
@@ -89,7 +89,7 @@ public class ProductsController
         }
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public void deleteProduct(@PathVariable int id)
     {

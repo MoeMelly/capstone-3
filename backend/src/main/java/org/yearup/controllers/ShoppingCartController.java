@@ -42,19 +42,20 @@ public class ShoppingCartController
     {
         try
         {
-            // get the currently logged in username
+            // get the currently logged-in username
             String userName = principal.getName();
             // find database user by userId
             User user = userDao.getByUserName(userName);
             int userId = user.getId();
 
             // use the shoppingcartDao to get all items in the cart and return the cart
-            return (ShoppingCart) shoppingCartDao.getAllCartItems();
+           // return (ShoppingCart) shoppingCartDao.getAllCartItems();
         }
         catch(Exception e)
         {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Oops... our bad.");
         }
+        return null;
     }
 
     // add a POST method to add a product to the cart - the url should be
@@ -99,7 +100,7 @@ public class ShoppingCartController
     // add a DELETE method to clear all products from the current users cart
     // https://localhost:8080/cart
 
-    @DeleteMapping("/products/{productId")
+    @DeleteMapping("/products/{productId}")
     public void deleteCartItem(@PathVariable int productId, Principal principal) {
 
         try {
