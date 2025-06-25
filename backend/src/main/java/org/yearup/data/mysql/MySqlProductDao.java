@@ -36,7 +36,7 @@ public class MySqlProductDao extends MySqlDaoBase implements ProductDao {
     @Override
     public List<Product> search(Integer categoryId, BigDecimal minPrice, BigDecimal maxPrice, String color) {
         List<Product> products = new ArrayList<>();
-        //method  was confusing and also kind of worked but was returning inconsistent results like color would still return color if empty string. more dynamic skip condition if filter isnt provided/applied.
+        //method  was confusing and also kind of worked but was returning inconsistent results like color would still return color if empty string. more dynamic skip condition if filter isn't provided/applied.
         String sql = "SELECT * FROM products " +
                 "WHERE (? = -1 OR category_id = ?) " +
                 "   AND (? = -1 OR price >= ?) " +
@@ -45,7 +45,7 @@ public class MySqlProductDao extends MySqlDaoBase implements ProductDao {
 
         categoryId = categoryId == null ? -1 : categoryId;
         minPrice = minPrice == null ? new BigDecimal("-1") : minPrice;
-        maxPrice = maxPrice == null ? new BigDecimal("-1") : maxPrice;
+        maxPrice = maxPrice == null ? new BigDecimal("-1") : maxPrice;  //null checks which are defensive to disable filters by passing -1 or an empty string -1 = filter ignored otherwise filter kicks in.
         color = color == null ? "" : color;
 
         try (Connection connection = getConnection()) {
