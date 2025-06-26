@@ -19,9 +19,10 @@ import java.util.logging.Logger;
 // only logged-in users should have access to these actions
 @RestController
 @PreAuthorize("isAuthenticated()")
+@RequestMapping("cart")
 public class ShoppingCartController
 {
-    // a shopping cart requires
+    // a shopping cart requires:
 
     private final ShoppingCartDao shoppingCartDao;
     private final UserDao userDao;
