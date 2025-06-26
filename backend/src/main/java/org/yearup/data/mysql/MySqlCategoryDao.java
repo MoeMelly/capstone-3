@@ -49,7 +49,7 @@ public class MySqlCategoryDao extends MySqlDaoBase implements CategoryDao {
         if (CategoryId <= 0) {
             return null;
         }
-        String sql = "SELECT * FROM categories WHERE name = ?";
+        String sql = "SELECT * FROM categories WHERE category_id = ?";
         try (Connection connection = source.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setInt(1, CategoryId);

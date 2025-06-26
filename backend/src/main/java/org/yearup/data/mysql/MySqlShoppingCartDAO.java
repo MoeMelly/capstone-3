@@ -1,4 +1,4 @@
-package org.yearup.controllers;
+package org.yearup.data.mysql;
 
 import org.springframework.stereotype.Component;
 import org.yearup.data.ShoppingCartDao;

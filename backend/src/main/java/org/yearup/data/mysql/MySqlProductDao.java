@@ -41,7 +41,7 @@ public class MySqlProductDao extends MySqlDaoBase implements ProductDao {
                 "WHERE (? = -1 OR category_id = ?) " +
                 "   AND (? = -1 OR price >= ?) " +
                 "   AND (? = -1 OR price <= ?) " + //added max price since it only had condition for minimum price
-                "   AND (? = OR color LIKE ?) ";
+                "   AND (? = '' OR color LIKE ?) ";
 
         categoryId = categoryId == null ? -1 : categoryId;
         minPrice = minPrice == null ? new BigDecimal("-1") : minPrice;
