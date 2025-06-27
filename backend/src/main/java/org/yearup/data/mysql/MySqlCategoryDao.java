@@ -77,12 +77,14 @@ public class MySqlCategoryDao extends MySqlDaoBase implements CategoryDao {
             statement.setString(2, category.getDescription());
             statement.executeUpdate();
 
-            ResultSet key = statement.getGeneratedKeys();
-            if (key.next()) {
-                int id = key.getInt(1);
-                return new Category(id, category.getName(), category.getDescription());
-            } else {
-                throw new SQLException("Insert failed: no ID returned");
+            try (ResultSet key = statement.getGeneratedKeys()) {
+                if (key.next()) {
+                    int id = key.getInt(1);
+                    return new Category(id, category.getName(), category.getDescription());
+                } else {
+                    throw new SQLException("Insert failed: no ID returned");
+                }
+
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
