@@ -14,7 +14,7 @@ import java.util.List;
 
 // add the annotations to make this a REST controller
 @RestController
-@RequestMapping("/categories")
+@RequestMapping("/categories") // set endpoint for rest of class mappings
 public class CategoriesController {
     private final CategoryDao categoryDao;
     private final ProductDao productDao;
