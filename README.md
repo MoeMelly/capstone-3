@@ -2,19 +2,6 @@
 
 **Easyshop** is a Java-based e-commerce application built with **Spring Boot** and **MySQL**. It provides RESTful APIs for product browsing, user authentication, and shopping cart management using a layered MVC architecture.
 
----
-
-### 🧠 DAO Layer Example
-Demonstrates retrieving all categories using JDBC.
-![DAO Code Example](screenshots/dao-code-example.png)
-
-### 📡 Controller Layer Example
-Shows how the controller handles category endpoints using `@GetMapping`.
-![Controller Code Example](screenshots/controller-code-example.png)
-
-
----
-
 ## 🚀 Features
 
 - 🔐 User authentication system
